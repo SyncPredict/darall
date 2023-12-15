@@ -9,7 +9,7 @@ RUN npm install
 
 # Копирование Prisma схемы
 COPY prisma ./prisma
-
+RUN npx prisma generate
 
 
 COPY . .

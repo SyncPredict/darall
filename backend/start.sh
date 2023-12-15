@@ -8,7 +8,6 @@ done
 
 
 # Только при первом запуске (инициализация)
-npx prisma generate
 npx prisma migrate dev --name init
 
 #npx prisma migrate deploy
