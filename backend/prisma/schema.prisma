@@ -1,0 +1,43 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Использование переменной окружения для URL базы данных
+}
+
+generator client {
+  provider = "prisma-client-js" // Клиент Prisma для JavaScript
+}
+
+// Модель элемента меню с полями для идентификации, названия, описания, цены
+model Item {
+  id           Int                @id @default(autoincrement()) // Уникальный идентификатор
+  name         String             // Название элемента меню
+  description  String             // Описание элемента меню
+  price        Float              // Цена
+  image        String?            // Опциональное поле для хранения пути к изображению
+  categories   CategoryToItem[]
+}
+
+// Модель пользователя с полями для идентификации, электронной почты, пароля и имени
+model User {
+  id       Int     @id @default(autoincrement()) // Уникальный идентификатор
+  email    String  @unique // Уникальный адрес электронной почты
+  password String  // Хэшированный пароль
+  name     String? // Опциональное поле для имени пользователя
+}
+
+// Модель категории с полями для идентификации и названия, а также связью с элементами меню
+model Category {
+  id       Int                @id @default(autoincrement()) // Уникальный идентификатор
+  name     String?            // Название категории (опционально)
+  items    CategoryToItem[]
+}
+
+// Промежуточная модель для отношений многие-ко-многим между Item и Category
+model CategoryToItem {
+  itemId Int
+  categoryId Int
+  item   Item @relation(fields: [itemId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([itemId, categoryId])
+}
