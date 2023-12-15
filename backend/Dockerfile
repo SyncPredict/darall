@@ -19,6 +19,6 @@ RUN npm run build
 RUN apt-get update && apt-get install -y postgresql-client
 EXPOSE 5000
 
-COPY start.sh ./start.sh
+COPY start.sh /start.sh
 RUN chmod +x /start.sh
-CMD ["/start.sh"]
+CMD ["./start.sh"]
