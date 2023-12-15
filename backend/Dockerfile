@@ -16,9 +16,10 @@ COPY . .
 
 RUN npm run build
 # Установка PostgreSQL клиента
-RUN apt-get update && apt-get install -y postgresql-client
+RUN apt-get update && apt-get install -y dos2unix postgresql-client
 EXPOSE 5000
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
+RUN dos2unix /app/start.sh
 CMD ["./start.sh"]
